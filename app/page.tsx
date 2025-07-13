@@ -280,21 +280,30 @@ export default function Home() {
                     </span>
                     <span>{entry.command}</span>
                   </div>
-                  <TypingAnimation
-                    text={entry.response}
-                    onFinish={
-                      index === commandHistory.length - 1
-                        ? () => {
-                            setTimeout(() => {
-                              terminalRef.current?.scrollTo({
-                                top: terminalRef.current.scrollHeight,
-                                behavior: "smooth",
-                              });
-                            }, 10);
-                          }
-                        : undefined
-                    }
-                  />
+
+                  {entry.command === "welcome" && (
+                    <pre className="whitespace-pre-wrap text-white font-mono typingAnimation">
+                      {entry.response ? entry.response : ""}
+                    </pre>
+                  )}
+
+                  {entry.command !== "welcome" && (
+                    <TypingAnimation
+                      text={entry.response}
+                      onFinish={
+                        index === commandHistory.length - 1
+                          ? () => {
+                              setTimeout(() => {
+                                terminalRef.current?.scrollTo({
+                                  top: terminalRef.current.scrollHeight,
+                                  behavior: "smooth",
+                                });
+                              }, 10);
+                            }
+                          : undefined
+                      }
+                    />
+                  )}
                 </div>
               ))}
             </div>
